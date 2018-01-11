@@ -99,10 +99,11 @@ public class CardContainerView extends FrameLayout {
                 getParent().getParent().requestDisallowInterceptTouchEvent(false);
                 break;
             case MotionEvent.ACTION_MOVE:
-                return handleActionMove(event);
+                handleActionMove(event);
+                break;
         }
 
-        return true;
+        return false;
     }
 
     private void handleActionDown(MotionEvent event) {
