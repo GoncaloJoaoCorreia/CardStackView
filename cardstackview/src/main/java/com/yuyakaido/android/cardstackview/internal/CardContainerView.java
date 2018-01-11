@@ -99,8 +99,7 @@ public class CardContainerView extends FrameLayout {
                 getParent().getParent().requestDisallowInterceptTouchEvent(false);
                 break;
             case MotionEvent.ACTION_MOVE:
-                handleActionMove(event);
-                break;
+                return handleActionMove(event);
         }
 
         return true;
@@ -151,16 +150,22 @@ public class CardContainerView extends FrameLayout {
         motionOriginY = event.getRawY();
     }
 
-    private void handleActionMove(MotionEvent event) {
-        isDragging = true;
+    private boolean handleActionMove(MotionEvent event) {
+        if (option.swipeDirection.contains(getDirection(event.getRawX(), event.getRawY()))) {
+            isDragging = true;
 
-        updateTranslation(event);
-        updateRotation();
-        updateAlpha();
+            updateTranslation(event);
+            updateRotation();
+            updateAlpha();
 
-        if (containerEventListener != null) {
-            containerEventListener.onContainerDragging(getPercentX(), getPercentY());
+            if (containerEventListener != null) {
+                containerEventListener.onContainerDragging(getPercentX(), getPercentY());
+            }
+
+            return true;
         }
+
+        return false;
     }
 
     private void updateTranslation(MotionEvent event) {
