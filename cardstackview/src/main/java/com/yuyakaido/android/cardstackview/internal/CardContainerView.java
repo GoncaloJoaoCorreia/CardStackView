@@ -103,7 +103,7 @@ public class CardContainerView extends FrameLayout {
                 break;
         }
 
-        return false;
+        return true;
     }
 
     private void handleActionDown(MotionEvent event) {
