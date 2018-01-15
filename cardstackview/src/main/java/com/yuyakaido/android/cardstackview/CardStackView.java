@@ -235,19 +235,19 @@ public class CardStackView extends FrameLayout {
                 nextTranslationY *= -1;
             }
 
-            float currentTranslationX = (i - 1)* Util.toPx(getContext(), option.translationDiff);
+            float currentTranslationX = i * Util.toPx(getContext(), option.translationDiff);
             if (option.stackFrom.contains(StackFrom.Left)) {
                 currentTranslationX *= -1;
             }
 
-            float nextTranslationX = i * Util.toPx(getContext(), option.translationDiff);
+            float nextTranslationX = (i - 1) * Util.toPx(getContext(), option.translationDiff);
             if (option.stackFrom.contains(StackFrom.Left)) {
                 nextTranslationX *= -1;
             }
 
             float translationY = currentTranslationY - Math.abs(percentX) * (currentTranslationY - nextTranslationY);
             ViewCompat.setTranslationY(view, translationY);
-            float translationX = currentTranslationX - Math.abs(percentY) * (currentTranslationX - nextTranslationX);
+            float translationX = currentTranslationX - Math.abs(percentX) * (currentTranslationX - nextTranslationX);
             ViewCompat.setTranslationX(view, translationX);
         }
     }
