@@ -5,7 +5,6 @@ import android.graphics.Point;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,9 +17,7 @@ import com.yuyakaido.android.cardstackview.R;
 import com.yuyakaido.android.cardstackview.SwipeDirection;
 
 import static com.yuyakaido.android.cardstackview.SwipeDirection.Bottom;
-import static com.yuyakaido.android.cardstackview.SwipeDirection.Left;
 import static com.yuyakaido.android.cardstackview.SwipeDirection.Right;
-import static com.yuyakaido.android.cardstackview.SwipeDirection.Top;
 
 public class CardContainerView extends FrameLayout {
 
@@ -173,15 +170,16 @@ public class CardContainerView extends FrameLayout {
         return false;
     }
 
-    public boolean isSwipingBack(MotionEvent event) {
-        return MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE && getDirection(event.getRawX(), event.getRawY()) == Right;
+    public boolean isSwipingBack(MotionEvent actionDownEvent, MotionEvent event) {
+        return MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE && getDirection(actionDownEvent.getRawX(), actionDownEvent.getRawY(), event.getRawX(), event.getRawY()) == Right;
     }
 
     private void updateTranslation(MotionEvent event) {
         float translationX = viewOriginX + event.getRawX() - motionOriginX;
         if (getDirection(event.getRawX(), event.getRawY()) == Right) {
-            //translationX -= getWidth();
+            translationX -= getWidth();
         }
+
         ViewCompat.setTranslationX(this, translationX);
         ViewCompat.setTranslationY(this, viewOriginY);
     }
@@ -211,7 +209,7 @@ public class CardContainerView extends FrameLayout {
         }
     }
 
-    private void moveToOrigin() {
+    public void moveToOrigin() {
         animate().translationX(viewOriginX)
                 .translationY(viewOriginY)
                 .setDuration(300L)
@@ -221,6 +219,10 @@ public class CardContainerView extends FrameLayout {
     }
 
     private SwipeDirection getDirection(float motionCurrentX, float motionCurrentY) {
+        return getDirection(motionOriginX, motionOriginY, motionCurrentX, motionCurrentY);
+    }
+
+    private SwipeDirection getDirection(float motionOriginX, float motionOriginY, float motionCurrentX, float motionCurrentY) {
         Quadrant quadrant = Util.getQuadrant(motionOriginX, motionOriginY, motionCurrentX, motionCurrentY);
         double radian = Util.getRadian(motionOriginX, motionOriginY, motionCurrentX, motionCurrentY);
         double degree;
