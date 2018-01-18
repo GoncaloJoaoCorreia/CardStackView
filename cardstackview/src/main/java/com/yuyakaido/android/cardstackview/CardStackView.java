@@ -11,6 +11,7 @@ import android.graphics.Point;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -589,7 +590,9 @@ public class CardStackView extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (!isReversing && state.topIndex > 0) {
+        if (state.topIndex <= 0) return super.onTouchEvent(event);
+
+        if (!isReversing) {
             ViewGroup parent = containers.getLast();
             View prevView = adapter.getView(state.topIndex - 1, null, parent);
             reorderForReverse(prevView);
