@@ -69,9 +69,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_activity_main_reverse:
                 reverse();
                 break;
+            case R.id.menu_activity_main_set_position:
+                testSetPosition();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private TouristSpot createTouristSpot() {
         return new TouristSpot("Yasaka Shrine", "Kyoto", "https://source.unsplash.com/Xq1ntWruZQI/600x800");
@@ -262,5 +266,10 @@ public class MainActivity extends AppCompatActivity {
     private void reverse() {
         cardStackView.reverse();
     }
+
+    private void testSetPosition() {
+        cardStackView.setStackPosition(2);
+    }
+
 
 }
