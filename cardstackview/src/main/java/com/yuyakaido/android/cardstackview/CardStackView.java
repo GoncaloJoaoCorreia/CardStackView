@@ -574,6 +574,7 @@ public class CardStackView extends FrameLayout {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (needsReorder) {
             Log.d("ASDASD", "onInterceptTouchEvent - needsReorder: " + needsReorder);
+            getParent().requestDisallowInterceptTouchEvent(true);
             return true;
         }
 
