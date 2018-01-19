@@ -565,12 +565,6 @@ public class CardStackView extends FrameLayout {
 
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        return /*!needsReorder && */super.dispatchTouchEvent(ev);
-    }
-
-
-    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (needsReorder) {
             // Consume the event, just don't do anything with it
