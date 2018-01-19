@@ -565,13 +565,13 @@ public class CardStackView extends FrameLayout {
 
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        return !needsReorder && super.dispatchTouchEvent(ev);
-    }
-
-
-    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (needsReorder) {
+            // Consume the event, just don't do anything with it
+            getParent().requestDisallowInterceptTouchEvent(true);
+            return true;
+        }
+
         switch (MotionEventCompat.getActionMasked(ev)) {
             case MotionEvent.ACTION_DOWN:
                 // Motion events are recycled, so we need to make a copy
@@ -590,7 +590,9 @@ public class CardStackView extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (state.topIndex <= 0) return super.onTouchEvent(event);
+        if (state.topIndex <= 0 || needsReorder) {
+            return true;
+        }
 
         if (!isReversing) {
             ViewGroup parent = containers.getLast();
