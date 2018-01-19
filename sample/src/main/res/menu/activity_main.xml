@@ -44,4 +44,9 @@
         android:title="Reverse"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/menu_activity_main_set_position"
+        android:title="Set Position - 2"
+        app:showAsAction="never"/>
+
 </menu>

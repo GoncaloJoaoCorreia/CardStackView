@@ -317,6 +317,16 @@ public class CardStackView extends FrameLayout {
         set.start();
     }
 
+    public void setStackPosition(int position) {
+        if (state.topIndex == position) return;
+        if (position > adapter.getCount() || position < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        state.topIndex = position;
+        initialize(false);
+
+    }
+
     private void moveToBottom(CardContainerView container) {
         CardStackView parent = (CardStackView) container.getParent();
         if (parent != null) {
