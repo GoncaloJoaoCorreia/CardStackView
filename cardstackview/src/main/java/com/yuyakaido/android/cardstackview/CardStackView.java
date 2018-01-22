@@ -323,7 +323,9 @@ public class CardStackView extends FrameLayout {
             throw new IndexOutOfBoundsException();
         }
         state.topIndex = position;
-        initialize(false);
+        if (adapter != null) {
+            initialize(false);
+        }
 
     }
 
