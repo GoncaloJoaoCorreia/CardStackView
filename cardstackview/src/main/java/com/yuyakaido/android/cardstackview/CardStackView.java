@@ -319,13 +319,15 @@ public class CardStackView extends FrameLayout {
 
     public void setStackPosition(int position) {
         if (state.topIndex == position) return;
+        if (adapter == null) {
+            throw new IllegalStateException("Adapter must not be null when setting the stack position");
+        }
         if (position > adapter.getCount() || position < 0) {
             throw new IndexOutOfBoundsException();
         }
         state.topIndex = position;
-        if (adapter != null) {
-            initialize(false);
-        }
+        initializeCardStackPosition();
+        initializeViewContents();
 
     }
 
